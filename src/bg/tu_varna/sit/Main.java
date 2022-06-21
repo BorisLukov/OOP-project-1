@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
         System.out.println("Select your option:");
         System.out.println("Type help to see the supported commands.");
         Scanner scanner = new Scanner(System.in);
@@ -47,6 +46,7 @@ public class Main {
 
                     break;
                 case "checkin":
+
                     scanner.nextLine();
 
                     break;
