@@ -8,13 +8,15 @@ public class RoomDetails {
     private Date dateTo;
     private String note;
     private int beds;
+    private int numGuests;
 
-    public RoomDetails(int roomNumber, Date dateFrom, Date dateTo, String note, int beds) {
+    public RoomDetails(int roomNumber, Date dateFrom, Date dateTo, String note, int beds, int numGuests) {
         this.roomNumber = roomNumber;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.note = note;
         this.beds = beds;
+        this.numGuests = numGuests;
     }
 
     public int getRoomNumber() {
@@ -55,5 +57,13 @@ public class RoomDetails {
 
     public void setBeds(int beds) {
         this.beds = beds;
+    }
+
+    public int getNumGuests() {
+        return numGuests;
+    }
+
+    public void setNumGuests(int numGuests) {
+        this.numGuests = numGuests;
     }
 }
