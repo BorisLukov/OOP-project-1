@@ -1,141 +1,105 @@
 package bg.tu_varna.sit;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class RoomOperations {
     private RoomDetails roomDetails;
-    private boolean status;
     Scanner scanner = new Scanner(System.in);
-    private ArrayList<RoomDetails> roomOperations = new ArrayList<>();
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-
-    public void open() throws IOException {
-        try {
-            File file = new File("Hotel.json");
-            if (file.createNewFile()) {
-                System.out.println("File created and opened: " + file.getName());
-            } else {
-                System.out.println("File successfully opened.");
-            }
-        } catch (IOException e) {
-            System.out.println("File couldn't open.");
-            e.printStackTrace();
-        }
-        FileReader fileReader = new FileReader("Hotel.json");
-        setStatus(true);
-        fileReader.close();
-    }
-
-    public void close() throws IOException {
-        FileReader fileReader = new FileReader("Hotel.json");
-        fileReader.close();
-        System.out.println("File successfully closed.");
-        setStatus(false);
-    }
-
-    public void save(){
-
-
-    }
-
-    public void saveas(){
-
-
-    }
-
-
-    public void addRooms(RoomDetails roomDetails){
-        if(roomDetails.getRoomNumber() <= 0) {
-            roomOperations.add(roomDetails);
-            System.out.println("Room successfully added");
-        }
-
-    }
+    private static ArrayList<RoomDetails> roomOperations = new ArrayList<RoomDetails>();
 
     public void checkin() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String op = scanner.nextLine();
+        System.out.println("Enter room number.");
+        int op = scanner.nextInt();
+        System.out.println("Enter date from: ");
+        String op1 = scanner.next();
+        System.out.println("Enter date to: ");
+        String op2 = scanner.next();
+        System.out.println("Enter number of guests: ");
+        int op3 = scanner.nextInt();
         for (RoomDetails roomDetails : roomOperations) {
-            if(roomDetails.getRoomNumber() == Integer.parseInt(op)){
+            if(roomDetails.getRoomNumber() == op && !roomDetails.getNote().equals("Unavailable")){
                 roomDetails.setNote("Taken");
-                System.out.println("Enter date from: ");
-                roomDetails.setDateFrom(sdf.parse(scanner.nextLine()));
-                System.out.println("Enter date to: ");
-                roomDetails.setDateTo(sdf.parse(scanner.nextLine()));
-
+                roomDetails.setDateFrom(sdf.parse(op1));
+                roomDetails.setDateTo(sdf.parse(op2));
+                roomDetails.setNumGuests(op3);
             }
         }
+        System.out.println(roomOperations.get(1));
     }
 
+
     public void availability() throws ParseException {
-        ArrayList<RoomDetails> availableRooms = new ArrayList();
+        ArrayList availableRooms = new ArrayList();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String op = scanner.nextLine();
+        System.out.println("Enter date:");
+        String op = scanner.next();
+        if(op != null){
+
         for (RoomDetails roomDetails : roomOperations) {
-            if(sdf.parse(op).before(roomDetails.getDateFrom()) && sdf.parse(op).after(roomDetails.getDateTo())){
+            if(sdf.parse(op).before(roomDetails.getDateFrom()) || sdf.parse(op).after(roomDetails.getDateTo())){
                 availableRooms.add(roomDetails);
             }
         }
-        for (RoomDetails roomDetails : availableRooms) {
-            System.out.println(roomDetails);
+            System.out.println(availableRooms);
+        }else{
+            Calendar calendar = Calendar.getInstance();
+            sdf.format(calendar);
+            for (RoomDetails roomDetails : roomOperations) {
+                if(calendar.before(roomDetails.getDateFrom()) && calendar.after(roomDetails.getDateTo())){
+                    availableRooms.add(roomDetails);
+                }
+            }
+            for (Object roomDetails : availableRooms) {
+                System.out.println(roomDetails);
+            }
         }
 
     }
 
     public void checkout(){
-        String op = scanner.nextLine();
+        System.out.println("Enter room number: ");
+        int op = scanner.nextInt();
         for (RoomDetails roomOperation : roomOperations) {
-            if(roomDetails.getRoomNumber() ==  Integer.parseInt(op)){
+            if(roomDetails.getRoomNumber() ==  op && roomDetails.getNote().equals("Taken")){
                 roomDetails.setNote("Available");
                 roomOperation.setDateFrom(null);
                 roomOperation.setDateTo(null);
+                roomOperation.setNumGuests(0);
             }
         }
+
     }
 
     public void report() throws ParseException {
         ArrayList<RoomDetails> rooms = new ArrayList();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Enter date from: ");
-        String op = scanner.nextLine();
+        String op = scanner.next();
         System.out.println("Enter date to: ");
-        String op2 = scanner.nextLine();
+        String op2 = scanner.next();
 
         for (RoomDetails roomDetails : roomOperations) {
             if(roomDetails.getDateFrom().after(sdf.parse(op)) || roomDetails.getDateTo().before(sdf.parse(op2))){
                 rooms.add(roomDetails);
-
             }
         }
-        for (RoomDetails room : rooms) {
-            System.out.println(roomDetails);
-        }
+        System.out.println(rooms);
     }
 
     public void find() throws ParseException {
         ArrayList<RoomDetails> rooms = new ArrayList();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Enter date from: ");
-        String op = scanner.nextLine();
+        String op = scanner.next();
         System.out.println("Enter date to: ");
-        String op2 = scanner.nextLine();
+        String op2 = scanner.next();
         System.out.println("Enter number of beds: ");
         int op3 = scanner.nextInt();
         for (RoomDetails roomDetails : roomOperations) {
-            if((roomDetails.getDateFrom().after(sdf.parse(op)) || roomDetails.getDateTo().before(sdf.parse(op2))) && roomDetails.getBeds() >= op3){
+            if(roomDetails.getBeds() >= op3){
                 rooms.add(roomDetails);
             }
         }
@@ -147,13 +111,31 @@ public class RoomOperations {
                 return o1.getBeds() < o2.getBeds() ? -1 : 1;
             }
         });
+        System.out.println("Enter number of guests: ");
+        rooms.get(0).setNumGuests(scanner.nextInt());
+        rooms.get(0).setNote("Taken");
+        rooms.get(0).setDateFrom(sdf.parse(op));
+        rooms.get(0).setDateTo(sdf.parse(op2));
     }
 
     public void findUrgent(){
 
     }
 
-    public void unavailable(){
-
+    public void unavailable() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("Enter room number.");
+        int op = scanner.nextInt();
+        System.out.println("Enter date from: ");
+        String op1 = scanner.next();
+        System.out.println("Enter date to: ");
+        String op2 = scanner.next();
+        for (RoomDetails roomDetails : roomOperations) {
+            if(roomDetails.getRoomNumber() == op){
+                roomDetails.setNote("Unavailable");
+                roomDetails.setDateFrom(sdf.parse(op1));
+                roomDetails.setDateTo(sdf.parse(op2));
+            }
+        }
     }
 }

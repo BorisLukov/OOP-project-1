@@ -66,4 +66,16 @@ public class RoomDetails {
     public void setNumGuests(int numGuests) {
         this.numGuests = numGuests;
     }
+
+    @Override
+    public String toString() {
+        return "RoomDetails{" +
+                "roomNumber=" + roomNumber +
+                ", dateFrom=" + dateFrom +
+                ", dateTo=" + dateTo +
+                ", note='" + note + '\'' +
+                ", beds=" + beds +
+                ", numGuests=" + numGuests +
+                '}';
+    }
 }
