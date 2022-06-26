@@ -1,7 +1,9 @@
 package bg.tu_varna.sit;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -20,8 +22,10 @@ public class Menu {
                 case "close":
                     files.close();
                 case "save":
+                    files.save();
                     break;
                 case "saveas":
+                    files.saveas();
                     break;
                 case "help":
                     System.out.println("Available commands:");

@@ -23,10 +23,6 @@ public class RoomDetails {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
     public Date getDateFrom() {
         return dateFrom;
     }
@@ -53,10 +49,6 @@ public class RoomDetails {
 
     public int getBeds() {
         return beds;
-    }
-
-    public void setBeds(int beds) {
-        this.beds = beds;
     }
 
     public int getNumGuests() {

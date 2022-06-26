@@ -7,7 +7,7 @@ import java.util.*;
 public class RoomOperations {
     private RoomDetails roomDetails;
     Scanner scanner = new Scanner(System.in);
-    private static ArrayList<RoomDetails> roomOperations = new ArrayList<RoomDetails>();
+    private static ArrayList<RoomDetails> roomOperations = new ArrayList<>();
 
     public void checkin() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -27,7 +27,6 @@ public class RoomOperations {
                 roomDetails.setNumGuests(op3);
             }
         }
-        System.out.println(roomOperations.get(1));
     }
 
 
