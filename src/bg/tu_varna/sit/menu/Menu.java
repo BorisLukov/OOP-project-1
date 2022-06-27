@@ -1,12 +1,15 @@
-package bg.tu_varna.sit;
+package bg.tu_varna.sit.menu;
+
+import bg.tu_varna.sit.files.Files;
+import bg.tu_varna.sit.rooms.RoomDetails;
+import bg.tu_varna.sit.rooms.RoomOperations;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
+    RoomDetails roomDetails = new RoomDetails();
     RoomOperations roomOperations = new RoomOperations();
     Files files = new Files();
     Scanner scanner = new Scanner(System.in);

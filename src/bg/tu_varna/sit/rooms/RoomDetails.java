@@ -1,4 +1,4 @@
-package bg.tu_varna.sit;
+package bg.tu_varna.sit.rooms;
 
 import java.util.Date;
 
@@ -17,6 +17,9 @@ public class RoomDetails {
         this.note = note;
         this.beds = beds;
         this.numGuests = numGuests;
+    }
+    public RoomDetails(){
+
     }
 
     public int getRoomNumber() {
@@ -69,5 +72,13 @@ public class RoomDetails {
                 ", beds=" + beds +
                 ", numGuests=" + numGuests +
                 '}';
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public void setBeds(int beds) {
+        this.beds = beds;
     }
 }
